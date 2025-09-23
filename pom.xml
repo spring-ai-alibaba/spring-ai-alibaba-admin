@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2024-2025 the original author or authors.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.alibaba.cloud.ai</groupId>
+    <artifactId>spring-ai-alibaba-admin</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <name>Spring AI Alibaba Admin</name>
+    <description>Server implementation of admin</description>
+    <url>https://github.com/alibaba/spring-ai-alibaba</url>
+
+    <modules>
+        <module>spring-ai-alibaba-admin-server</module>
+    </modules>
+
+    <scm>
+        <connection>git://github.com/alibaba/spring-ai-alibaba.git</connection>
+        <developerConnection>git@github.com:alibaba/spring-ai-alibaba.git</developerConnection>
+        <url>https://github.com/alibaba/spring-ai-alibaba</url>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+
+        <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+        <spring-ai.version>1.0.0</spring-ai.version>
+        <spring-boot.version>3.3.6</spring-boot.version>
+
+        <!-- 数据库相关 -->
+        <druid.version>1.2.20</druid.version>
+        <mybatis-plus.version>3.5.9</mybatis-plus.version>
+        <mysql.version>8.0.33</mysql.version>
+
+        <!-- 工具库 -->
+        <lombok.version>1.18.30</lombok.version>
+        <slf4j.version>2.0.7</slf4j.version>
+        <logback.version>1.5.8</logback.version>
+
+        <!-- 搜索引擎 -->
+        <elasticsearch.version>9.1.2</elasticsearch.version>
+
+        <!-- 监控追踪 -->
+        <json-schema-validator.version>1.0.87</json-schema-validator.version>
+
+        <!-- maven plugin -->
+        <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <build-helper-maven-plugin.version>3.4.0</build-helper-maven-plugin.version>
+        <maven-antrun.version>1.8</maven-antrun.version>
+        <flatten-maven-plugin.version>1.2.7</flatten-maven-plugin.version>
+        <spring-javaformat-maven-plugin.version>0.0.44</spring-javaformat-maven-plugin.version>
+
+        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <revision>1.0.0-SNAPSHOT</revision>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-core</artifactId>
+                <version>${spring-ai-alibaba.version}</version>
+            </dependency>
+
+            <!-- Nacos -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-alibaba-nacos-config</artifactId>
+                <version>2023.0.3.3</version>
+            </dependency>
+
+            <!-- Elasticsearch -->
+            <dependency>
+                <groupId>co.elastic.clients</groupId>
+                <artifactId>elasticsearch-java</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.json</groupId>
+                <artifactId>jakarta.json-api</artifactId>
+                <version>2.1.3</version>
+            </dependency>
+
+            <!-- JSON Schema验证 -->
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>json-schema-validator</artifactId>
+                <version>${json-schema-validator.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <parameters>true</parameters>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+        </repository>
+    </repositories>
+
+</project>

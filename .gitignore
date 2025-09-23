@@ -1,0 +1,91 @@
+target/
+
+nohup.out
+
+### IntelliJ IDEA ###
+.idea/*
+**/.idea/*
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### .env files contain local environment variables ###
+.env
+
+# Maven ignore
+.flattened-pom.xml
+
+# node_modules
+**/node_modules
+
+# Generated Files
+spring-ai-alibaba-examples/playground-flight-booking/frontend/generated/
+spring-ai-alibaba-examples/playground-flight-booking/src/main/bundles/
+/spring-ai-alibaba-examples/playground-flight-booking-example/
+**/spring-ai-alibaba-jmanus/extensions/*
+**/venv/*
+**/spring-ai-alibaba-jmanus/h2-data/*
+**/playwright/*
+spring-ai-alibaba-jmanus/ui-vue3/pnpm-lock.yaml
+docker/middleware/mysql/data/*
+docker/middleware/mysql/log/*
+docker/middleware/nacos/*
+
+
+# windows os
+/extensions/
+/h2-data/
+
+# checkstyle report files
+**/checkstyle-report.xml
+**/logs/*
+.specstory/.what-is-this.md
+.specstory/history/2025-07-15_03-46Z-以@browserusetool-java-有样本。结合@-database-下面所有有py脚本。在@-database-下生成databasetool-java.md
+
+#/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/mysql/data/*
+#/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/mysql/logs/*
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/mysql/data/.gitkeep
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/mysql/logs/.gitkeep
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/mysql/data/
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/mysql/logs/
+
+#/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/redis/data/*
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/redis/data
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/redis/data/.gitkeep
+
+
+#/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/rocketmq/store/*
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/rocketmq/store/
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/rocketmq/store/.gitkeep
+
+
+#/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/higress/*
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/higress/data/
+#!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/higress/data/.gitkeep
+
+/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/elasticsearch/*
+!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/elasticsearch/data/
+!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/elasticsearch/data/.gitkeep
+
+/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/kibana/*
+!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/kibana/data/
+!/spring-ai-alibaba-studio/spring-ai-alibaba-studio-server/docker/middleware/kibana/data/.gitkeep
