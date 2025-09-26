@@ -16,7 +16,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring-ai-alibaba.version>1.0.0.4-SNAPSHOT</spring-ai-alibaba.version>
+        <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
         <spring-boot.version>3.3.6</spring-boot.version>
         <nacos-client.version>3.0.3</nacos-client.version>
         <commons-lang3.version>3.11</commons-lang3.version>
@@ -221,7 +221,7 @@
         <dependency>
             <groupId>com.alibaba.cloud.ai</groupId>
             <artifactId>spring-ai-alibaba-autoconfigure-arms-observation</artifactId>
-            <version>1.0.0.4-SNAPSHOT</version>
+            <version>1.0.0.4</version>
         </dependency>
 
         <dependency>
