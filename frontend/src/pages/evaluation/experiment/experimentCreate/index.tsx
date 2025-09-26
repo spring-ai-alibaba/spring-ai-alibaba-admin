@@ -31,9 +31,7 @@ interface ExperimentCreateForm {
 
 // 对象类型选项
 const objectTypes = [
-  { value: 'prompt', label: 'Prompt' },
-  { value: 'model', label: 'Model' },
-  { value: 'api', label: 'API' }
+  { value: 'prompt', label: 'Prompt' }
 ];
 
 // 组件属性接口
@@ -86,6 +84,9 @@ const ExperimentCreate: React.FC<GatherCreateProps> = ({ onCancel, onSuccess, hi
 
   // 字段映射配置状态
   const [fieldMapping, setFieldMapping] = useState<Record<string, string>>({}); // 字段映射配置 {promptParam: datasetField}
+
+  // 对象类型选择状态
+  const [selectedObjectType, setSelectedObjectType] = useState<string>(''); // 选中的对象类型
 
   // 返回列表页面
   const handleGoBack = () => {
@@ -1194,7 +1195,23 @@ const ExperimentCreate: React.FC<GatherCreateProps> = ({ onCancel, onSuccess, hi
                 label="对象类型"
                 rules={[{ required: true, message: '请选择对象类型' }]}
               >
-                <Select placeholder="选择评测对象类型">
+                <Select
+                  placeholder="选择评测对象类型"
+                  onChange={(value) => {
+                    setSelectedObjectType(value);
+                    // 当切换对象类型时，清空相关字段
+                    if (value !== 'prompt') {
+                      form.setFieldsValue({
+                        promptKey: undefined,
+                        version: undefined
+                      });
+                      setSelectedPrompt(null);
+                      setPromptVersions([]);
+                      setPromptVersionDetail(null);
+                      setFieldMapping({});
+                    }
+                  }}
+                >
                   {objectTypes.map(type => (
                     <Option key={type.value} value={type.value}>
                       {type.label}
@@ -1203,62 +1220,69 @@ const ExperimentCreate: React.FC<GatherCreateProps> = ({ onCancel, onSuccess, hi
                 </Select>
               </Form.Item>
 
-              <Form.Item
-                name="promptKey"
-                label="Prompt Key"
-                rules={[{ required: true, message: '请输入或选择Prompt Key' }]}
-              >
-                <AutoComplete
-                  placeholder="请输入或选择Prompt Key"
-                  onChange={handlePromptKeyChange}
-                  filterOption={(inputValue, option) => {
-                    if (!option || !option.value) return false;
-                    const value = option.value.toString().toLowerCase();
-                    const input = inputValue.toLowerCase();
-                    return value.indexOf(input) !== -1;
-                  }}
-                  notFoundContent={promptsLoading ? '加载中...' : '暂无数据'}
-                >
-                  {prompts.map(prompt => (
-                    <AutoComplete.Option key={prompt.promptKey} value={prompt.promptKey}>
-                      {prompt.promptKey} { prompt.promptDescription ? " - " : ""} {prompt.promptDescription}
-                    </AutoComplete.Option>
-                  ))}
-                </AutoComplete>
-              </Form.Item>
+              {/* 只有当选择了 prompt 类型时才显示 Prompt 相关配置 */}
+              {selectedObjectType === 'prompt' && (
+                <>
+                  <Form.Item
+                    name="promptKey"
+                    label="Prompt Key"
+                    rules={[{ required: true, message: '请输入或选择Prompt Key' }]}
+                  >
+                    <AutoComplete
+                      placeholder="请输入或选择Prompt Key"
+                      onChange={handlePromptKeyChange}
+                      filterOption={(inputValue, option) => {
+                        if (!option || !option.value) return false;
+                        const value = option.value.toString().toLowerCase();
+                        const input = inputValue.toLowerCase();
+                        return value.indexOf(input) !== -1;
+                      }}
+                      notFoundContent={promptsLoading ? '加载中...' : '暂无数据'}
+                    >
+                      {prompts.map(prompt => (
+                        <AutoComplete.Option key={prompt.promptKey} value={prompt.promptKey}>
+                          {prompt.promptKey} { prompt.promptDescription ? " - " : ""} {prompt.promptDescription}
+                        </AutoComplete.Option>
+                      ))}
+                    </AutoComplete>
+                  </Form.Item>
+                </>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <Form.Item
-                name="version"
-                label="版本"
-                rules={[{ required: true, message: '请选择版本' }]}
-              >
-                <Select
-                  placeholder="选择版本"
-                  loading={promptVersionsLoading}
-                  disabled={!selectedPrompt}
-                  onChange={handlePromptVersionChange}
-                  notFoundContent={promptVersionsLoading ? '加载中...' : '请先选择Prompt Key'}
+            {/* 只有当选择了 prompt 类型时才显示版本选择 */}
+            {selectedObjectType === 'prompt' && (
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <Form.Item
+                  name="version"
+                  label="版本"
+                  rules={[{ required: true, message: '请选择版本' }]}
                 >
-                  {promptVersions.map(version => {
-                    const versionStatus = version.status;
-                    return (
-                      <Option key={version.version} value={version.version}>
-                        <span className='mr-2'>
-                          {version.version} {version.versionDescription ? " - " : ""} {version.versionDescription}
-                        </span>
-                        <Tag color={versionStatus === "release" ? "green" : "blue"}>{version.status === "release" ? "正式版本" : "PRE版本"}</Tag>
-                      </Option>
-                    )
-                  })}
-                </Select>
-              </Form.Item>
+                  <Select
+                    placeholder="选择版本"
+                    loading={promptVersionsLoading}
+                    disabled={!selectedPrompt}
+                    onChange={handlePromptVersionChange}
+                    notFoundContent={promptVersionsLoading ? '加载中...' : '请先选择Prompt Key'}
+                  >
+                    {promptVersions.map(version => {
+                      const versionStatus = version.status;
+                      return (
+                        <Option key={version.version} value={version.version}>
+                          <span className='mr-2'>
+                            {version.version} {version.versionDescription ? " - " : ""} {version.versionDescription}
+                          </span>
+                          <Tag color={versionStatus === "release" ? "green" : "blue"}>{version.status === "release" ? "正式版本" : "PRE版本"}</Tag>
+                        </Option>
+                      )
+                    })}
+                  </Select>
+                </Form.Item>
+              </div>
+            )}
 
-            </div>
-
-            {/* Prompt版本详情信息卡片 */}
-            {promptVersionDetail && (
+            {/* 只有当选择了 prompt 类型时才显示 Prompt版本详情信息卡片 */}
+            {selectedObjectType === 'prompt' && promptVersionDetail && (
               <div className="bg-gray-50 rounded-lg p-4 mt-4">
                 <div className="flex justify-between items-start mb-3">
                   <h4 className="text-base font-medium text-gray-900">Prompt版本详情</h4>
@@ -1308,8 +1332,8 @@ const ExperimentCreate: React.FC<GatherCreateProps> = ({ onCancel, onSuccess, hi
               </div>
             )}
 
-            {/* 字段映射配置卡片 */}
-            {selectedDataset && promptVersionDetail && datasetDetail && (
+            {/* 只有当选择了 prompt 类型时才显示字段映射配置卡片 */}
+            {selectedObjectType === 'prompt' && selectedDataset && promptVersionDetail && datasetDetail && (
               <div className="bg-gray-50 rounded-lg p-4 mt-4">
                 <h4 className="text-base font-medium text-gray-900 mb-4">字段映射配置</h4>
                 <div className="flex items-center justify-between mb-4">
