@@ -1,10 +1,10 @@
 /**
- * Legacy 路径工具函数
- * 统一处理 legacy 页面的路径，自动添加 /admin 前缀
+ * Admin 路径工具函数
+ * 统一处理 admin 页面的路径，自动添加 /admin 前缀
  */
 
 /**
- * 获取完整的 legacy 路径（自动添加 /admin 前缀）
+ * 获取完整的 admin 路径（自动添加 /admin 前缀）
  * @param path 原始路径，如 '/prompts', '/prompt-detail' 等
  * @returns 完整的路径，如 '/admin/prompts', '/admin/prompt-detail' 等
  */

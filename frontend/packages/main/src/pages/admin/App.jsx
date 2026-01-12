@@ -18,6 +18,7 @@ import GatherDetail from './pages/evaluation/gather/gatherDetail';
 import EvaluationEvaluator from './pages/evaluation/evaluator';
 import EvaluationEvaluatorDetail from './pages/evaluation/evaluator/evaluator-detail';
 import EvaluationEvaluatorDebug from './pages/evaluation/evaluator/evaluator-debug';
+import ApplicationBuild from './pages/application/build';
 import { ModelsContext } from './context/models';
 import PromptAPI from './services';
 
@@ -44,16 +45,17 @@ function App() {
           modelNameMap,
           setModels
         }}>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen" style={{ backgroundColor: 'var(--ag-ant-color-bg-layout, #f5f5f5)' }}>
             <Layout>
               <Routes>
-                <Route path="/" element={<PromptsPage />} />
+                <Route path="/" element={<ApplicationBuild />} />
+                <Route path="/build" element={<ApplicationBuild />} />
+                <Route path="/application-build" element={<ApplicationBuild />} />
                 <Route path="/prompts" element={<PromptsPage />} />
                 <Route path="/prompt-detail" element={<PromptDetailPage />} />
                 <Route path="/version-history" element={<VersionHistoryPage />} />
                 <Route path="/playground" element={<PlaygroundPage />} />
                 <Route path="/tracing" element={<TracingPage />} />
-                <Route path="/version-history" element={<VersionHistoryPage />} />
                 <Route path="/evaluation-experiment" element={<Experiment />} />
                 <Route path="/evaluation-experiment/create" element={<ExperimentCreate />} />
                 <Route path="/evaluation-experiment/detail/:id" element={<ExperimentDetail />} />

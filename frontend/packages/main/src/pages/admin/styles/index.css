@@ -14,7 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8fafc;
+  background-color: var(--ag-ant-color-bg-layout, #f8fafc);
 }
 
 .sidebar-menu {
@@ -22,7 +22,7 @@ body {
 }
 
 .sidebar-menu:hover {
-  background-color: #f1f5f9;
+  background-color: var(--ag-ant-color-fill-quaternary, rgba(0, 0, 0, 0.02));
 }
 
 .sidebar-submenu {
@@ -30,7 +30,7 @@ body {
 }
 
 .sidebar-submenu:hover {
-  background-color: #e2e8f0;
+  background-color: var(--ag-ant-color-fill-tertiary, rgba(0, 0, 0, 0.04));
 }
 
 .modal-overlay {
@@ -73,7 +73,7 @@ body {
 }
 
 .table-row:hover {
-  background-color: #f8fafc;
+  background-color: var(--ag-ant-color-fill-quaternary, rgba(0, 0, 0, 0.02));
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

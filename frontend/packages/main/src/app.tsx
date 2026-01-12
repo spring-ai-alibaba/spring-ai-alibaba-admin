@@ -1,6 +1,6 @@
 import '../tailwind.css';
-import '@src/legacy/styles/tailwind.css';
-import '@src/legacy/styles/index.css';
+import '@src/pages/admin/styles/tailwind.css';
+import '@src/pages/admin/styles/index.css';
 import $i18n from '@/i18n';
 import { matchRoutes } from 'umi';
 

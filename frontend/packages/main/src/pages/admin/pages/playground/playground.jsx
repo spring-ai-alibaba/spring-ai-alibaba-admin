@@ -899,13 +899,16 @@ const PlaygroundPage = () => {
   // Show loading state while fetching prompts data
   if (loading) {
     return (
-      <div className="p-8 min-h-[400px] flex items-center justify-center">
+      <div 
+        className="p-8 min-h-[400px] flex items-center justify-center"
+        style={{ backgroundColor: 'var(--ag-ant-color-bg-layout, transparent)' }}
+      >
         <Spin
           indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
           size="large"
         >
           <div className="text-center pt-4">
-            <Text type="secondary" className="mt-4 block">
+            <Text type="secondary" className="mt-4 block" style={{ color: 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))' }}>
               加载 Prompts 数据中...
             </Text>
           </div>
@@ -917,11 +920,26 @@ const PlaygroundPage = () => {
   return (
     <>
       <style>{cursorBlinkStyle}</style>
-      <div className="p-8">
+      <div 
+        className="p-8"
+        style={{ backgroundColor: 'var(--ag-ant-color-bg-layout, transparent)' }}
+      >
 
       <div className="mb-8">
-        <Title level={1} className="m-0 mb-2">Playground</Title>
-        <Paragraph type="secondary" className="m-0">测试和调试你的AI提示词</Paragraph>
+        <Title 
+          level={1} 
+          className="m-0 mb-2"
+          style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}
+        >
+          Playground
+        </Title>
+        <Paragraph 
+          type="secondary" 
+          className="m-0"
+          style={{ color: 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))' }}
+        >
+          测试和调试你的AI提示词
+        </Paragraph>
       </div>
 
       <Space direction="vertical" size={32} className="w-full">
@@ -1181,7 +1199,7 @@ const PlaygroundPage = () => {
                             </div>
 
                             {/* 模型参数 */}
-                            <Card size="small" style={{ backgroundColor: '#fafafa' }}>
+                            <Card size="small" style={{ backgroundColor: 'var(--ag-ant-color-fill-quaternary, #fafafa)' }}>
                               <Text strong className="block mb-2">
                                 模型参数
                               </Text>
@@ -1391,7 +1409,11 @@ const PlaygroundPage = () => {
                             chatContainerRefs.current[prompt.id] = el;
                           }
                         }}
-                        className="border border-gray-200 rounded-lg mb-4 bg-gray-50"
+                        className="border rounded-lg mb-4"
+                        style={{
+                          borderColor: 'var(--ag-ant-color-border-secondary, rgba(0, 0, 0, 0.06))',
+                          backgroundColor: 'var(--ag-ant-color-fill-quaternary, #fafafa)',
+                        }}
                         style={{
                           height: promptInstances.length >= 3 ? 250 : 300,
                           overflowY: 'auto',
@@ -1405,8 +1427,8 @@ const PlaygroundPage = () => {
                               icon={<RobotOutlined />}
                               style={{
                                 marginBottom: 16,
-                                backgroundColor: '#f0f0f0',
-                                color: '#bfbfbf'
+                                backgroundColor: 'var(--ag-ant-color-fill-quaternary, #f0f0f0)',
+                                color: 'var(--ag-ant-color-text-disabled, #bfbfbf)'
                               }}
                             />
                             <Title level={5} style={{ margin: 0, marginBottom: 8, color: '#8c8c8c' }}>
@@ -1475,10 +1497,10 @@ const PlaygroundPage = () => {
 
                                       {/* AI消息内容 */}
                                       <div style={{
-                                        backgroundColor: '#fff',
+                                        backgroundColor: 'var(--ag-ant-color-bg-base, #fff)',
                                         padding: '10px 12px',
                                         borderRadius: '4px 12px 12px 12px',
-                                        border: '1px solid #e8e8e8'
+                                        border: '1px solid var(--ag-ant-color-border-secondary, #e8e8e8)'
                                       }}>
                                         {message.isLoading ? (
                                           <div>

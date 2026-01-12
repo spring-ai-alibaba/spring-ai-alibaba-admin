@@ -18,26 +18,30 @@ export default defineConfig({
   routes: [
     {
       path: '/',
-      redirect: '/app',
+      redirect: '/build',
+    },
+    {
+      path: '/build',
+      component: '@/pages/admin/pages/application/build/index',
     },
     {
       path: '/admin',
       routes: [
-        { path: '/admin', component: '@/legacy/pages/index' },
-        { path: '/admin/playground', component: '@/legacy/pages/playground/playground' },
-        { path: '/admin/prompts', component: '@/legacy/pages/prompts/prompts' },
-        { path: '/admin/prompt-detail', component: '@/legacy/pages/prompts/prompt-detail/prompt-detail' },
-        { path: '/admin/version-history', component: '@/legacy/pages/prompts/version-history/version-history' },
-        { path: '/admin/tracing', component: '@/legacy/pages/tracing/tracing' },
-        { path: '/admin/evaluation/experiment', component: '@/legacy/pages/evaluation/experiment/index' },
-        { path: '/admin/evaluation/experiment/create', component: '@/legacy/pages/evaluation/experiment/experimentCreate' },
-        { path: '/admin/evaluation/experiment/detail/:id', component: '@/legacy/pages/evaluation/experiment/experimentDetail' },
-        { path: '/admin/evaluation/gather', component: '@/legacy/pages/evaluation/gather/index' },
-        { path: '/admin/evaluation/gather/create', component: '@/legacy/pages/evaluation/gather/gatherCreate' },
-        { path: '/admin/evaluation/gather/detail/:id', component: '@/legacy/pages/evaluation/gather/gatherDetail' },
-        { path: '/admin/evaluation/evaluator', component: '@/legacy/pages/evaluation/evaluator/index' },
-        { path: '/admin/evaluation/evaluator/:id', component: '@/legacy/pages/evaluation/evaluator/evaluator-detail' },
-        { path: '/admin/evaluation/debug', component: '@/legacy/pages/evaluation/evaluator/evaluator-debug' },
+        { path: '/admin', component: '@/pages/admin/pages/index' },
+        { path: '/admin/playground', component: '@/pages/admin/pages/playground/playground' },
+        { path: '/admin/prompts', component: '@/pages/admin/pages/prompts/prompts' },
+        { path: '/admin/prompt-detail', component: '@/pages/admin/pages/prompts/prompt-detail/prompt-detail' },
+        { path: '/admin/version-history', component: '@/pages/admin/pages/prompts/version-history/version-history' },
+        { path: '/admin/tracing', component: '@/pages/admin/pages/tracing/tracing' },
+        { path: '/admin/evaluation/experiment', component: '@/pages/admin/pages/evaluation/experiment/index' },
+        { path: '/admin/evaluation/experiment/create', component: '@/pages/admin/pages/evaluation/experiment/experimentCreate' },
+        { path: '/admin/evaluation/experiment/detail/:id', component: '@/pages/admin/pages/evaluation/experiment/experimentDetail' },
+        { path: '/admin/evaluation/gather', component: '@/pages/admin/pages/evaluation/gather/index' },
+        { path: '/admin/evaluation/gather/create', component: '@/pages/admin/pages/evaluation/gather/gatherCreate' },
+        { path: '/admin/evaluation/gather/detail/:id', component: '@/pages/admin/pages/evaluation/gather/gatherDetail' },
+        { path: '/admin/evaluation/evaluator', component: '@/pages/admin/pages/evaluation/evaluator/index' },
+        { path: '/admin/evaluation/evaluator/:id', component: '@/pages/admin/pages/evaluation/evaluator/evaluator-detail' },
+        { path: '/admin/evaluation/debug', component: '@/pages/admin/pages/evaluation/evaluator/evaluator-debug' },
       ],
     },
     {
@@ -55,10 +59,6 @@ export default defineConfig({
     {
       path: '/app/:tab',
       component: 'App/AppList',
-    },
-    {
-      path: '/home',
-      component: 'App/index',
     },
     {
       path: '/dify',

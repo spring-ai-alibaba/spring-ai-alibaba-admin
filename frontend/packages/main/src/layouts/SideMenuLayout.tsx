@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useLocation, useNavigate } from 'umi';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Layout as AntLayout, Menu } from 'antd';
 import {
   AppstoreOutlined,
@@ -16,24 +16,31 @@ import {
   ApiOutlined,
   DatabaseOutlined,
   ToolOutlined,
+  BuildOutlined,
   SwapOutlined,
 } from '@ant-design/icons';
+import favicon from '../favicon.svg';
 import $i18n from '@/i18n';
 import Header from './Header';
 import styles from './index.module.less';
 import LangSelect from './LangSelect';
 import LoginProvider from './LoginProvider';
 import SettingDropdown from './SettingDropdown';
-import ThemeSelect from './ThemeSelect';
+import ThemeSelect, { prefersColor } from './ThemeSelect';
 import UserAccountModal from '@/components/UserAccountModal';
 import PureLayout from './Pure';
-import { ModelsContext } from '@/legacy/context/models';
-import PromptAPI from '@/legacy/services';
+import { ModelsContext } from '@/pages/admin/context/models';
+import PromptAPI from '@/pages/admin/services';
 
 const { Sider, Content } = AntLayout;
 
 // 获取应该高亮的菜单项 key
 const getSelectedMenuKey = (pathname: string): string => {
+  // 应用构建相关页面
+  if (pathname.startsWith('/build') || pathname === '/') {
+    return '/build';
+  }
+
   // 应用相关页面
   if (pathname.startsWith('/app')) {
     return '/app';
@@ -117,10 +124,11 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
   const [collapsed, setCollapsed] = useState(false);
   const [models, setModels] = useState<any[]>([]);
   const [modelNameMap, setModelNameMap] = useState<Record<number, string>>({});
+  const [isDarkMode, setIsDarkMode] = useState(prefersColor.get() === 'dark');
 
-  // 加载模型列表（用于 legacy 页面）
+  // 加载模型列表（用于 admin 页面）
   useEffect(() => {
-    PromptAPI.getModels()
+    PromptAPI.getModels({})
       .then((res) => {
         const nameMap = res.data.pageItems.reduce((acc: Record<number, string>, item: any) => {
           acc[item.id] = item.name;
@@ -132,6 +140,18 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
       .catch((err) => {
         console.error('Failed to load models:', err);
       });
+  }, []);
+
+  // 监听主题变化
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsDarkMode(prefersColor.get() === 'dark');
+    };
+    window.addEventListener('storage', handleStorageChange);
+    // 由于主题切换会 reload，这里主要是为了初始化
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   // 获取应该高亮的菜单项 key
@@ -149,11 +169,13 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
         icon: <AppstoreOutlined />,
         children: [
           {
+            key: '/build',
+            label: '应用构建',
+            icon: <BuildOutlined />,
+          },
+          {
             key: '/app',
-            label: $i18n.get({
-              id: 'main.layouts.MenuList.application',
-              dm: '应用',
-            }),
+            label: '应用管理',
             icon: <AppstoreOutlined />,
           },
           {
@@ -254,8 +276,8 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
     navigate(key);
   };
 
-  // 判断是否应该隐藏侧边栏（登录页、首页等）
-  const shouldHideSidebar = ['/login', '/', '/home'].includes(location.pathname);
+  // 判断是否应该隐藏侧边栏（登录页等）
+  const shouldHideSidebar = ['/login'].includes(location.pathname);
 
   if (shouldHideSidebar) {
     return (
@@ -292,13 +314,37 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
               width={256}
               collapsedWidth={80}
               collapsed={collapsed}
-              theme="light"
-              className="shadow-lg border-r border-gray-200"
-              style={{ height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }}
+              theme={isDarkMode ? 'dark' : 'light'}
+              className="shadow-lg"
+              style={{
+                height: '100vh',
+                position: 'fixed',
+                left: 0,
+                top: 0,
+                bottom: 0,
+                borderRight: `1px solid var(--ag-ant-color-border-secondary, ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'})`,
+                backgroundColor: isDarkMode ? 'var(--ag-ant-color-bg-container, #141414)' : 'var(--ag-ant-color-bg-container, #ffffff)',
+              }}
             >
-              <div className="p-6 border-b border-gray-200">
-                <h1 className="text-xl font-bold text-gray-800 flex items-center whitespace-nowrap overflow-hidden">
-                  <SettingOutlined className="mr-1 text-blue-500" />
+              <div
+                style={{
+                  padding: '24px',
+                  borderBottom: `1px solid var(--ag-ant-color-border-secondary, ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'})`,
+                }}
+              >
+                <h1
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: 600,
+                    color: isDarkMode ? 'var(--ag-ant-color-text-base, #ffffff)' : 'var(--ag-ant-color-text-base, #262626)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    margin: 0,
+                  }}
+                >
+                  <img src={favicon} alt="SAA Admin" style={{ marginRight: '4px', width: '20px', height: '20px' }} />
                   {!collapsed && 'SAA Admin'}
                 </h1>
               </div>
@@ -311,19 +357,61 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
                 onClick={handleMenuClick}
                 className="border-r-0 mt-6"
                 inlineCollapsed={collapsed}
+                theme={isDarkMode ? 'dark' : 'light'}
               />
 
-              <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white">
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  borderTop: `1px solid var(--ag-ant-color-border-secondary, ${isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'})`,
+                  backgroundColor: isDarkMode ? 'var(--ag-ant-color-bg-container, #141414)' : 'var(--ag-ant-color-bg-container, #ffffff)',
+                }}
+              >
                 <div
-                  className="flex items-center justify-center p-4 cursor-pointer hover:bg-gray-50 transition-colors"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '16px',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }}
                   onClick={() => setCollapsed(!collapsed)}
                 >
                   {collapsed ? (
-                    <MenuUnfoldOutlined className="text-gray-600 text-lg" />
+                    <MenuUnfoldOutlined
+                      style={{
+                        color: isDarkMode ? 'var(--ag-ant-color-text-secondary, rgba(255, 255, 255, 0.65))' : 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))',
+                        fontSize: '18px',
+                      }}
+                    />
                   ) : (
-                    <MenuFoldOutlined className="text-gray-600 text-lg" />
+                    <MenuFoldOutlined
+                      style={{
+                        color: isDarkMode ? 'var(--ag-ant-color-text-secondary, rgba(255, 255, 255, 0.65))' : 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))',
+                        fontSize: '18px',
+                      }}
+                    />
                   )}
-                  {!collapsed && <span className="ml-2 text-gray-600">收起菜单</span>}
+                  {!collapsed && (
+                    <span
+                      style={{
+                        marginLeft: '8px',
+                        color: isDarkMode ? 'var(--ag-ant-color-text-secondary, rgba(255, 255, 255, 0.65))' : 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))',
+                      }}
+                    >
+                      收起菜单
+                    </span>
+                  )}
                 </div>
               </div>
             </Sider>

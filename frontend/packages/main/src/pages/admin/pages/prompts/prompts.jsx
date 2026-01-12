@@ -302,10 +302,10 @@ const PromptsPage = () => {
   return (
     <div>
     {/* <ElementSelector onSelect={handleElementSelect} debug={true}>*/}
-      <div className="p-8 fade-in">
+      <div className="p-8 fade-in" style={{ backgroundColor: 'var(--ag-ant-color-bg-layout, transparent)' }}>
       <div className="mb-8">
-        <Title level={2} style={{ marginBottom: 8 }}>Prompts管理</Title>
-        <Paragraph type="secondary">管理和组织你的AI提示词模板</Paragraph>
+        <Title level={2} style={{ marginBottom: 8, color: 'var(--ag-ant-color-text-base, #262626)' }}>Prompts管理</Title>
+        <Paragraph type="secondary" style={{ color: 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))' }}>管理和组织你的AI提示词模板</Paragraph>
       </div>
 
       {/* 错误提示 */}
@@ -323,7 +323,7 @@ const PromptsPage = () => {
       <Card style={{ marginBottom: 24 }}>
         <div style={{ display: 'flex', gap: 16, alignItems: 'end', flexWrap: 'wrap' }}>
           <div style={{ flex: 1, minWidth: 256 }}>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--ag-ant-color-text-base, #262626)' }}>
               按 Prompt Key 搜索
             </label>
             <Search
@@ -334,7 +334,7 @@ const PromptsPage = () => {
           </div>
 
           <div style={{ flex: 1, minWidth: 256 }}>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--ag-ant-color-text-base, #262626)' }}>
               按标签搜索
             </label>
             <Search

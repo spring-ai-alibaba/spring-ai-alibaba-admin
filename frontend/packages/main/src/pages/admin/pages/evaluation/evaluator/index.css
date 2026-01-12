@@ -60,6 +60,6 @@
 }
 
 .evaluation-evaluator-page .evaluation-evaluator-table {
-  background: white;
+  background: var(--ag-ant-color-bg-base, #ffffff);
   border-radius: 8px;
 }

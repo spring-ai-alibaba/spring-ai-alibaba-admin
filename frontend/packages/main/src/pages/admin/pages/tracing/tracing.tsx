@@ -149,7 +149,23 @@ const SpanWaterfallRow: React.FC<SpanWaterfallRowProps> = ({ span, depth, traceS
 
   return (
     <div
-      className={`flex items-center w-full cursor-pointer border-b border-gray-100 hover:bg-gray-50 ${isSelected ? 'bg-blue-50' : ''}`}
+      className="flex items-center w-full cursor-pointer border-b"
+      style={{
+        borderColor: 'var(--ag-ant-color-border-secondary, rgba(0, 0, 0, 0.06))',
+        backgroundColor: isSelected 
+          ? 'var(--ag-ant-color-primary-bg, rgba(24, 144, 255, 0.1))' 
+          : 'transparent',
+      }}
+      onMouseEnter={(e) => {
+        if (!isSelected) {
+          e.currentTarget.style.backgroundColor = 'var(--ag-ant-color-fill-quaternary, rgba(0, 0, 0, 0.02))';
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (!isSelected) {
+          e.currentTarget.style.backgroundColor = 'transparent';
+        }
+      }}
       onClick={() => onSpanSelect(span)}
     >
       <div className="w-3/5 shrink-0 whitespace-nowrap overflow-hidden text-ellipsis p-2" style={{ paddingLeft: depth * 24 + 8 }}>
@@ -188,7 +204,12 @@ const SpanWaterfallRow: React.FC<SpanWaterfallRowProps> = ({ span, depth, traceS
           </div>}
         </div>
       </div>
-      <div className="flex-grow h-6 bg-gray-100 relative p-0">
+      <div 
+        className="flex-grow h-6 relative p-0"
+        style={{
+          backgroundColor: 'var(--ag-ant-color-fill-quaternary, rgba(0, 0, 0, 0.02))',
+        }}
+      >
         <Tooltip title={hoverContent}>
           <div
             className="h-full absolute rounded"
@@ -1050,7 +1071,14 @@ function TracingPage() {
         <Col span={15}>
           <Card title="Span 瀑布图" bodyStyle={{ padding: 0 }}>
             <div className="span-waterfall-chart">
-              <div className="flex items-center w-full border-b border-gray-200 bg-gray-50 font-semibold text-xs text-gray-500">
+              <div 
+                className="flex items-center w-full border-b font-semibold text-xs"
+                style={{
+                  borderColor: 'var(--ag-ant-color-border-secondary, rgba(0, 0, 0, 0.06))',
+                  backgroundColor: 'var(--ag-ant-color-fill-quaternary, rgba(0, 0, 0, 0.02))',
+                  color: 'var(--ag-ant-color-text-secondary, rgba(0, 0, 0, 0.65))',
+                }}
+              >
                 <div className="w-3/5 shrink-0 p-2">Operation Name</div>
                 <div className="flex-grow relative p-2">Timeline</div>
               </div>
@@ -1259,7 +1287,7 @@ function TracingPage() {
                 <Row gutter={[16, 16]}>
                   <Col span={24}>
                     <Form.Item
-                      label="评测集"
+                      label={<span style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}>评测集</span>}
                       required
                       className="mb-0"
                     >
@@ -1281,7 +1309,7 @@ function TracingPage() {
                   </Col>
                   <Col span={24}>
                     <Form.Item
-                      label="版本"
+                      label={<span style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}>版本</span>}
                       required
                       className="mb-0"
                     >
@@ -1330,7 +1358,12 @@ function TracingPage() {
                       <Text strong>字段映射:</Text>
                       <div className="mt-2">
                         {/* 根据Span数据结构动态生成映射项 */}
-                        <div className="bg-gray-50 p-3 rounded">
+                        <div 
+                          className="p-3 rounded"
+                          style={{
+                            backgroundColor: 'var(--ag-ant-color-fill-quaternary, rgba(0, 0, 0, 0.02))',
+                          }}
+                        >
                           {selectedSpanForDataset && (
                             <>
 
@@ -1462,8 +1495,16 @@ function TracingPage() {
   }, [pagination.current, pagination.pageSize])
 
   return (
-    <div style={{ padding: 24 }}>
-      <Title level={2}>
+    <div 
+      style={{ 
+        padding: 24,
+        backgroundColor: 'var(--ag-ant-color-bg-layout, transparent)'
+      }}
+    >
+      <Title 
+        level={2}
+        style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}
+      >
         链路追踪
         {filteredPromptName && (
           <Tag color="blue" closable onClose={handleClearPromptFilter} style={{ marginLeft: 8, verticalAlign: 'middle' }}>
@@ -1504,7 +1545,10 @@ function TracingPage() {
         <Card style={{ marginBottom: 24 }}>
           <Row gutter={24}>
             <Col span={6}>
-              <Form.Item name="serviceName" label="来源应用">
+              <Form.Item 
+                name="serviceName" 
+                label={<span style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}>来源应用</span>}
+              >
                 <Select showSearch placeholder="全部" allowClear>
                   {services.map(s => <Option key={s} value={s}>{s}</Option>)}
                 </Select>
@@ -1513,7 +1557,10 @@ function TracingPage() {
             {
               serviceName === "spring-ai-alibaba-studio" && (
                 <Col span={6}>
-                  <Form.Item name="sourceType" label="来源类型">
+                  <Form.Item 
+                    name="sourceType" 
+                    label={<span style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}>来源类型</span>}
+                  >
                     <Select placeholder="全部" allowClear>
                       <Option value="prompt">Prompt</Option>
                       <Option value="playground">Playground</Option>
@@ -1525,14 +1572,20 @@ function TracingPage() {
               )
             }
             <Col span={6}>
-              <Form.Item name="spanName" label="Span名称">
+              <Form.Item 
+                name="spanName" 
+                label={<span style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}>Span名称</span>}
+              >
                 <Select showSearch placeholder="全部" allowClear>
                   {operations.map(op => <Option key={op} value={op}>{op}</Option>)}
                 </Select>
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item name="traceId" label="TraceId">
+              <Form.Item 
+                name="traceId" 
+                label={<span style={{ color: 'var(--ag-ant-color-text-base, #262626)' }}>TraceId</span>}
+              >
                 <Input placeholder="输入TraceId" />
               </Form.Item>
             </Col>

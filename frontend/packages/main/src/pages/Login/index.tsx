@@ -16,7 +16,7 @@ const LoginPage: React.FC = () => {
 
   const onLogin = (data: any) => {
     runAsync(data).then(() => {
-      history.replace('/app');
+      history.replace('/build');
     });
   };
 

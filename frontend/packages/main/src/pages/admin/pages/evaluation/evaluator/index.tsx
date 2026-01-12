@@ -234,10 +234,21 @@ const EvaluationEvaluator: React.FC = () => {
   ];
 
   return (
-    <div className="evaluator-page p-8 fade-in">
+    <div 
+      className="evaluator-page p-8 fade-in"
+      style={{ backgroundColor: 'var(--ag-ant-color-bg-layout, transparent)' }}
+    >
       {/* 页面标题 */}
       <div className="mb-8">
-        <Title level={2} style={{ marginBottom: 8 }}>评估器管理</Title>
+        <Title 
+          level={2} 
+          style={{ 
+            marginBottom: 8,
+            color: 'var(--ag-ant-color-text-base, #262626)'
+          }}
+        >
+          评估器管理
+        </Title>
       </div>
       <Card className='mb-4'>
         {/* 搜索区域 */}

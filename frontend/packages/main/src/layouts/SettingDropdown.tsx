@@ -2,7 +2,7 @@ import $i18n from '@/i18n';
 import { Dropdown, IconButton } from '@spark-ai/design';
 import type { MenuProps } from 'antd';
 import React from 'react';
-import { useNavigate } from 'umi';
+import { useNavigate } from 'react-router-dom';
 
 const menuItems: MenuProps['items'] = [
   {
