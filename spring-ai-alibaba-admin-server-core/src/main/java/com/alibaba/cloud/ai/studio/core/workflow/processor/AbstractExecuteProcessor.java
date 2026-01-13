@@ -26,6 +26,7 @@ import com.alibaba.cloud.ai.studio.runtime.domain.workflow.Node;
 import com.alibaba.cloud.ai.studio.runtime.domain.workflow.NodeResult;
 import com.alibaba.cloud.ai.studio.runtime.domain.workflow.NodeStatusEnum;
 import com.alibaba.cloud.ai.studio.runtime.domain.workflow.NodeTypeEnum;
+import com.alibaba.cloud.ai.studio.runtime.domain.workflow.ParamSourceEnum;
 import com.alibaba.cloud.ai.studio.runtime.domain.workflow.ValueFromEnum;
 import com.alibaba.cloud.ai.studio.runtime.domain.workflow.inner.RetryConfig;
 import com.alibaba.cloud.ai.studio.runtime.domain.workflow.inner.ShortTermMemory;
@@ -489,7 +490,7 @@ public abstract class AbstractExecuteProcessor implements ExecuteProcessor {
 	 * @param context The workflow context
 	 */
 	private void handleSessionVariables(WorkflowContext context) {
-		Map<String, Object> sessionMap = (Map<String, Object>) context.getVariablesMap().get("session");
+		Map<String, Object> sessionMap = (Map<String, Object>) context.getVariablesMap().get(ParamSourceEnum.conversation.name());
 		if (MapUtils.isEmpty(sessionMap)) {
 			return;
 		}

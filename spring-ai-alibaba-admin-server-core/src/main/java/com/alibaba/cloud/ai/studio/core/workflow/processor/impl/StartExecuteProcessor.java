@@ -102,7 +102,7 @@ public class StartExecuteProcessor extends AbstractExecuteProcessor {
 					context.getVariablesMap().put(ParamSourceEnum.conversation.name(), sessionObj);
 				}
 				else {
-					Map<String, Object> sessionObj = (Map<String, Object>) context.getVariablesMap().get("session");
+					Map<String, Object> sessionObj = (Map<String, Object>) context.getVariablesMap().get(ParamSourceEnum.conversation.name());
 					Object value = redisManager.get(String.format(WORKFLOW_SESSION_VARIABLE_KEY_TEMPLATE,
 							context.getAppId(), context.getConversationId(), sessionParam.getKey()));
 					value = value == null ? sessionParam.getDefaultValue() : value;
@@ -131,7 +131,7 @@ public class StartExecuteProcessor extends AbstractExecuteProcessor {
 		Map<String, Object> resultMap = Maps.newHashMap();
 		resultMap.put("user", context.getUserMap());
 		resultMap.put("sys", context.getSysMap());
-		resultMap.put("session", context.getVariablesMap().get("session"));
+		resultMap.put(ParamSourceEnum.conversation.name(), context.getVariablesMap().get(ParamSourceEnum.conversation.name()));
 		nodeResult.setInput(JsonUtils.toJson(resultMap));
 		nodeResult.setOutput(JsonUtils.toJson(resultMap));
 		nodeResult.setNodeExecTime((System.currentTimeMillis() - start) + "ms");
